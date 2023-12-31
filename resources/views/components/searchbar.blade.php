@@ -11,7 +11,7 @@
             </form>
         </div>
     </div>
-    
+
     <div class="card mt-3">
         <div class="card-header pb-0 border-0">
             <h5 class="">Who to follow</h5>

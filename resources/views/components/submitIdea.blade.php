@@ -7,7 +7,6 @@
             @foreach ($errors->all() as $error)
                 <span>{{ $error }}</span>
             @endforeach
-            
         </div>
         
         <div class="">

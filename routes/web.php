@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\IdeasController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -39,6 +40,9 @@ Route::group(['prefix' => 'idea/', 'as' => 'idea.'], function () {
 });
 
 Route::resource('users', UserController::class)->only('edit', 'show', 'update')->middleware('auth');
+
+Route::get('users/{idea}/follow', [FollowerController::class, 'follow'])->middleware('auth')->name('users.follow');
+Route::get('users/{idea}/unfollow', [FollowerController::class, 'unfollow'])->middleware('auth')->name('users.unfollow');
 
 Route::get('/terms', function () {
     return view('terms');

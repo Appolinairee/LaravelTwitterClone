@@ -6,7 +6,7 @@
 
     <div class="col-6">    
         @if($editing ?? false)
-            <h4>Update your Idea {{ $intrus }} </h4>
+            <h4>Update your Idea </h4>
             
             <div class="row">
                 <form action="{{ route('idea.update', $idea->id) }}" method="POST">

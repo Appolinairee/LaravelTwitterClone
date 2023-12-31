@@ -4,28 +4,17 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show(User $user)
     {
         $ideas = $user->ideas()->paginate(5);
         return view('users.show', compact('user', 'ideas'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function edit(User $user)
     {
         $ideas = $user->ideas()->paginate(5);
@@ -33,16 +22,30 @@ class UserController extends Controller
         return view('users.edit', compact('user', 'editing', 'ideas'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(User $user)
+    public function update(User $user, Request $request)
     {
-        //
+        if (Auth::id() != $user->id) {
+            abort(403);
+        }       
+
+        if ($request->isMethod('put')){
+            $validated = $request->validate([
+                'name' => ['nullable', 'min:5', 'max:40'],
+                'image' => ['nullable','image', 'mimes:jpeg,png,jpg,gif', 'max: 2048'],
+                'bio' => ['nullable', 'min:5', 'max:300']
+            ]);
+    
+            if($request->has('image')){
+                $imagePath = request()->file('image')->store('profile', 'public');
+                $validated['image'] = $imagePath;
+                Storage::disk('public')->delete($user->image?? '');
+
+            }
+    
+            $user->update($validated);
+            $ideas = $user->ideas()->paginate(5);
+            return view('users.show', compact('user', 'ideas'));
+        }
     }
 
 }

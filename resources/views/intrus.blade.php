@@ -7,8 +7,6 @@
     <title>Document</title>
 </head>
 <body>
-    {{ $intrus }}
-
     <?php
         return header("Location: index.php");
     ?>

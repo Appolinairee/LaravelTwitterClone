@@ -20,6 +20,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'bio',
+        'image',
         'password',
     ];
 
@@ -48,5 +50,21 @@ class User extends Authenticatable
 
     public function comments() {
         return $this->hasMany(Comment::class);
+    }
+
+    public function getImage() {
+        if($this->image){
+            return url('storage/'. $this->image);
+        }
+        
+        return "https://api.dicebear.com/6.x/fun-emoji/svg?seed={$this->name}";
+    }
+
+    public function followers(){
+        return $this->belongsToMany(User::class, 'follower_user', 'user_id', 'follower_id')->withTimestamps();
+    }
+
+    public function following(){
+        return $this->belongsToMany(User::class, 'follower_user', 'follower_id', 'user_id')->withTimestamps();
     }
 }
