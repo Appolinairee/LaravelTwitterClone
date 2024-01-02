@@ -30,6 +30,7 @@
                         @endif
                     @endif
                 @endauth
+
             </div>
         </div>
 
@@ -66,11 +67,22 @@
                 <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-comment me-1">
                     </span> {{ $user->comments->count() }} </a>
             </div>
-            
+            {{
+                auth()->user()->isFollowing($user)
+            }}
             @auth
             @if (Auth::id() !== $user->id)
                 <div class="mt-3">
-                    <button class="btn btn-primary btn-sm"> Follow </button>
+                    <form action="{{ route('users.follow', $user) }}" method="post">
+                        @csrf
+                        <button type="submit" class="btn btn-primary btn-sm">
+                            @if (auth()->user()->isFollowing($user))
+                               Je suis
+                            @else
+                                Tu es
+                            @endif
+                        </button>
+                    </form>
                 </div>
             @endif
             @endauth

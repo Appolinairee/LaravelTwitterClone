@@ -41,8 +41,8 @@ Route::group(['prefix' => 'idea/', 'as' => 'idea.'], function () {
 
 Route::resource('users', UserController::class)->only('edit', 'show', 'update')->middleware('auth');
 
-Route::get('users/{idea}/follow', [FollowerController::class, 'follow'])->middleware('auth')->name('users.follow');
-Route::get('users/{idea}/unfollow', [FollowerController::class, 'unfollow'])->middleware('auth')->name('users.unfollow');
+Route::post('users/{idea}/follow', [FollowerController::class, 'follow'])->middleware('auth')->name('users.follow');
+Route::post('users/{idea}/unfollow', [FollowerController::class, 'unfollow'])->middleware('auth')->name('users.unfollow');
 
 Route::get('/terms', function () {
     return view('terms');
