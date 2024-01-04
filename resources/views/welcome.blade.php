@@ -12,7 +12,6 @@
                 @include('components.submitIdea')
             @endauth
 
-
             @guest
                 <h4>
                     <a href="/login">Connect</a> 

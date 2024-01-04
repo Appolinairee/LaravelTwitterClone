@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="FR">
+<html lang="fr">
 
 <head>
     <meta charset="utf-8">
@@ -27,10 +27,10 @@
                 <ul class="navbar-nav">
                     @guest
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="/login">Login</a>
+                            <a class="{{ Route::is('login')? 'text-white bg-primary rounded' : '' }} nav-link" aria-current="page" href="/login">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="/register">Register</a>
+                            <a class="{{ Route::is('register')? 'text-white bg-primary rounded' : '' }} nav-link" href="/register">Register</a>
                         </li>
                     @endguest
 

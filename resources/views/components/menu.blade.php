@@ -3,34 +3,21 @@
         <div class="card-body pt-3">
             <ul class="nav nav-link-secondary flex-column fw-bold gap-2">
                 <li class="nav-item">
-                    <a class="nav-link text-dark" href="#">
+                    <a class="{{ Route::is('welcome')? 'text-white bg-primary rounded' : '' }} nav-link text-dark" href="{{ Route('welcome') }}">
                         <span>Home</span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span>Explore</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span>Feed</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/terms">
-                        <span>Terms</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span>Support</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <span>Settings</span></a>
+                <li class="{{ Route::is('terms')? 'text-white bg-primary rounded' : '' }} nav-item">
+                    <a class="nav-link" href="{{ Route('terms') }}">
+                        <span>Terms</span>
+                    </a>
                 </li>
             </ul>
         </div>
 
-        <div class="card-footer text-center py-2">
-            <a class="btn btn-link btn-sm" href="">View Profile </a>
-        </div>
+        @auth
+            <div class="card-footer text-center py-2">
+                <a class="btn btn-link btn-sm" href="{{ Route('users.show', auth()->user()->id) }}">View Profile </a>
+            </div>
+        @endauth
     </div>
 </div>

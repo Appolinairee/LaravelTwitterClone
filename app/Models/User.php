@@ -69,7 +69,16 @@ class User extends Authenticatable
     }
 
     public function isFollowing(User $user){
-        dd($this->followers()->count());
-        return $this->followers()->count();
+        return $this->following()->where('user_id', $user->id)->exists();
+    }
+
+    public function userToFollow($perPage = 10){
+        $allUsers = User::where('id', '!=', $this->id)->paginate($perPage);
+    
+        $usersToFollow = $allUsers->reject(function ($otherUser) {
+            return $this->isFollowing($otherUser);
+        });
+
+        return $allUsers;
     }
 }

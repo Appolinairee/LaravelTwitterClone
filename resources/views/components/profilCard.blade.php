@@ -1,5 +1,7 @@
 <div class="card">
     <div class="px-3 pt-4 pb-2">
+        @include('components.successIdea')
+
         <div class="d-flex align-items-center justify-content-between">
             <div class="d-flex align-items-center">
                 <img style="width: 80px; height: 70px;" class="me-3 avatar-sm rounded-circle"
@@ -61,28 +63,28 @@
             
             <div class="d-flex justify-content-start">
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-user me-1">
-                    </span> 0 Followers </a>
+                    </span> {{ $user->followers()->count() }} Followers </a>
                 <a href="#" class="fw-light nav-link fs-6 me-3"> <span class="fas fa-brain me-1">
                     </span> {{ $user->ideas->count() }} </a>
                 <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-comment me-1">
                     </span> {{ $user->comments->count() }} </a>
             </div>
-            {{
-                auth()->user()->isFollowing($user)
-            }}
+
+
             @auth
             @if (Auth::id() !== $user->id)
                 <div class="mt-3">
-                    <form action="{{ route('users.follow', $user) }}" method="post">
-                        @csrf
-                        <button type="submit" class="btn btn-primary btn-sm">
-                            @if (auth()->user()->isFollowing($user))
-                               Je suis
-                            @else
-                                Tu es
-                            @endif
-                        </button>
-                    </form>
+                    @if (auth()->user()->isFollowing($user))
+                        <form action="{{ route('users.follow', $user) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm">Unfollow</button>
+                        </form>
+                    @else
+                        <form action="{{ route('users.follow', $user) }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary btn-sm">follow</button>
+                        </form>
+                    @endif
                 </div>
             @endif
             @endauth
