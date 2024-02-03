@@ -32,5 +32,6 @@
         </div>
 
         @include('components.searchbar');
+
     </div>
 @endsection

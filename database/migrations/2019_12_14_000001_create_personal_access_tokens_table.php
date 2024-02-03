@@ -15,10 +15,10 @@ class CreatePersonalAccessTokensTable extends Migration
     {
         Schema::create('personal_access_tokens', function (Blueprint $table) {
             $table->id();
-            // $table->morphs('tokenable', 200);
-            // $table->string('name');
-            // $table->string('token', 200)->unique();
-            // $table->text('abilities')->nullable();
+            $table->morphs('tokenable', 200);
+            $table->string('name');
+            $table->string('token', 200)->unique();
+            $table->text('abilities')->nullable();
             $table->timestamp('last_used_at')->nullable();
             $table->timestamps();
         });

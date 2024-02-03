@@ -17,12 +17,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'email',
         'bio',
         'image',
         'password',
+        'user_id'
     ];
 
     /**
@@ -80,5 +82,13 @@ class User extends Authenticatable
         });
 
         return $allUsers;
+    }
+
+    public function likes(){
+        return $this->belongsToMany(Ideas::class, 'idea_likes', 'user_id', 'idea_id')->withTimestamps();
+    }
+
+    public function isLiked(Ideas $idea){
+        return $this->likes()->where('idea_id', $idea->id)->exists();
     }
 }

@@ -23,26 +23,35 @@
             @if (Auth::id() === $idea->user_id)
                 <a href="{{ route('idea.edit', $idea->id) }}">Edit</a>
             @endif
+            
+            @if (auth()->user()->id == $idea->user->id  )
+                <form method="POST" action="{{ route('idea.destroy', $idea->id) }}">
+                    @csrf
+                    @method('delete')
+                    <button> X </button>
+                </form>
+            @endif
         @endauth
-
-        <form method="POST" action="{{ route('idea.destroy', $idea->id) }}">
-            @csrf
-            @method('delete');
-            <button> X </button>
-        </form>
         
         <div class="d-flex justify-content-between">
             <div>
-                <a href="#" class="fw-light nav-link fs-6"> <span class="fas fa-heart me-1">
-                    </span> {{ $idea->likes }} </a>
+                    @auth
+                       <form action="{{ route('idea.like', $idea->id) }}" method="post">
+                            @csrf
+                            <button type="submit" class="fw-light nav-link fs-6"> 
+                                <span class="fas fa-heart me-1">
+                                </span> {{ $idea->likes()->count() }}
+                            </div>
+                       </form>
+                    @endauth
             </div>
             
             <div>
-                <span class="fs-6 fw-light text-muted"> <span class="fas fa-clock"> </span>
-                    {{$idea->created_at}} </span>
+                <span class="fs-6 fw-light text-muted"> 
+                    <span class="fas fa-clock"> </span>
+                    {{$idea->created_at->diffForHumans()}}
+                </span>
             </div>
         </div>
-
         @include('components.commentBox')
     </div>
-</div>

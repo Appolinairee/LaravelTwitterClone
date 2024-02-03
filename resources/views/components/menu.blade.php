@@ -6,6 +6,13 @@
                     <a class="{{ Route::is('welcome')? 'text-white bg-primary rounded' : '' }} nav-link text-dark" href="{{ Route('welcome') }}">
                         <span>Home</span></a>
                 </li>
+
+                <li class="nav-item text-dark">
+                    <a class="{{ Route::is('feed')? 'text-white bg-primary rounded' : '' }} nav-link" href="{{ Route('feed') }}">
+                        <span>Feed</span>
+                    </a>
+                </li>
+
                 <li class="{{ Route::is('terms')? 'text-white bg-primary rounded' : '' }} nav-item">
                     <a class="nav-link" href="{{ Route('terms') }}">
                         <span>Terms</span>

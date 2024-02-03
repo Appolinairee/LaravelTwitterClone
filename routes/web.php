@@ -1,7 +1,9 @@
 <?php
 
+use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CommentController;
+use App\Http\Controllers\FeedController;
 use App\Http\Controllers\FollowerController;
 use App\Http\Controllers\IdeasController;
 use App\Http\Controllers\UserController;
@@ -41,9 +43,14 @@ Route::group(['prefix' => 'idea/', 'as' => 'idea.'], function () {
 
 Route::resource('users', UserController::class)->only('edit', 'show', 'update')->middleware('auth');
 
-Route::post('users/{idea}/follow', [FollowerController::class, 'follow'])->middleware('auth')->name('users.follow');
-Route::post('users/{idea}/unfollow', [FollowerController::class, 'unfollow'])->middleware('auth')->name('users.unfollow');
+Route::post('users/{user}/follow', [FollowerController::class, 'follow'])->middleware('auth')->name('users.follow');
+
+Route::post('users/{idea}/like', [FollowerController::class, 'like'])->middleware('auth')->name('idea.like');
+
+Route::get('/feed', FeedController::class)->middleware('auth')->name('feed');
 
 Route::get('/terms', function () {
     return view('terms');
 })->name("terms");
+
+Route::get('/admin', [AdminController::class, 'show'])->middleware(['auth', 'isAdmin'])->name('admin.dashboard');
